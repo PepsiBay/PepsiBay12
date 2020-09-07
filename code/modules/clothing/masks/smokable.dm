@@ -314,7 +314,34 @@
 	return
 
 /obj/item/clothing/mask/smokable/cigarette/attack(mob/living/carbon/human/H, mob/user, def_zone)
-	if(lit && H == user && istype(H))
+	if(lit && user.a_intent == I_HURT && user.zone_sel.selecting == BP_EYES)
+		for(var/obj/item/protection in list(H.head, H.wear_mask, H.glasses))
+			if(protection && (protection.body_parts_covered & EYES))
+				to_chat(user, "<span class='warning'>You're going to need to remove the eye covering first.</span>")
+				return
+		var/obj/item/organ/internal/eyes/E = H.internal_organs_by_name[H.species.vision_organ]
+		if(!E)
+			return
+		else
+			attack_animation(user)
+			user.visible_message(
+				"<span class='danger'>[user] put a cigarette in [H]'s eyes!</span>")
+			extinguish(no_message = TRUE)
+			E.damage += rand(2, 3)
+			H.eye_blurry += rand(3,6)
+			if(E.damage > 12)
+				H.eye_blurry += rand(3,6)
+			if(E.damage > 10)
+				to_chat(H, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
+			if (E.damage >= E.min_bruised_damage)
+				to_chat(H, "<span class='danger'>You go blind!</span>")
+				H.eye_blind = 5
+				H.eye_blurry = 5
+				H.disabilities |= NEARSIGHTED
+				spawn(100)
+				H.disabilities &= ~NEARSIGHTED
+			
+	if(lit && H == user && istype(H) && user.a_intent != I_HURT)
 		var/obj/item/blocked = H.check_mouth_coverage()
 		if(blocked)
 			to_chat(H, "<span class='warning'>\The [blocked] is in the way!</span>")
