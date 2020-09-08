@@ -901,3 +901,219 @@
 /datum/sprite_accessory/hair/wheeler
 	name = "Wheeler"
 	icon_state = "hair_wheeler"
+
+/datum/sprite_accessory/hair/bowie
+    name = "From Mars"
+    icon_state = "hair_bowie"
+
+/datum/sprite_accessory/hair/sickboy
+    name = "Sick"
+    icon_state = "hair_sickboy"
+
+/datum/sprite_accessory/hair/wolfmane
+	name = "Wolven mane"
+	icon_state = "hair_wolfmane"
+
+/datum/sprite_accessory/hair/backswept
+	name = "Backswept"
+	icon_state = "hair_backswept"
+
+/datum/sprite_accessory/hair/leon
+	name = "Leon"
+	icon_state = "hair_leon"
+
+/datum/sprite_accessory/hair/wong
+	name = "Wong"
+	icon_state = "hair_wong"
+
+/datum/sprite_accessory/hair/dreadtail1
+	name = "Dreadtail 1"
+	icon_state = "hair_dreadtail1"
+
+/datum/sprite_accessory/hair/dreadtail2
+	name = "Dreadtail 2"
+	icon_state = "hair_dreadtail2"
+
+/datum/sprite_accessory/hair/veryshortovereye
+	name = "Overeye Very Short"
+	icon_state = "hair_veryshortovereye"
+
+/datum/sprite_accessory/hair/veryshortovereyealternate
+	name = "Overeye Very Short, Alternate"
+	icon_state = "hair_veryshortovereyealternate"
+
+/datum/sprite_accessory/hair/zieglertail
+	name = "Zieglertail"
+	icon_state = "hair_ziegler"
+
+/datum/sprite_accessory/hair/zone
+	name = "Zone Braid"
+	icon_state = "hair_zone"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/spikyponytail
+	name = "Spiky Ponytail"
+	icon_state = "hair_spikyponytail"
+
+/datum/sprite_accessory/hair/samurai_swtgr
+	name = "Samurai"
+	icon_state = "hair_samurai_swtgr"
+
+/datum/sprite_accessory/hair/unkept
+	name = "Unkept"
+	icon_state = "hair_unkept"
+
+/datum/sprite_accessory/hair/viking
+	name = "Viking"
+	icon_state = "hair_viking_swtgr"
+	gender = MALE
+
+/datum/sprite_accessory/hair/viking2
+	name = "Viking 2"
+	icon_state = "hair_viking_swtgr2"
+	gender = MALE
+
+/datum/sprite_accessory/hair/sidepart
+	name = "Sidepart Hair"
+	icon_state = "hair_sidepart"
+
+/datum/sprite_accessory/hair/smessy
+	name = "Messy Hair"
+	icon_state = "hair_smessy"
+
+/datum/sprite_accessory/hair/stylo
+	name = "Stylo"
+	icon_state = "hair_stylo"
+
+/datum/sprite_accessory/hair/qing_dynasty_swtgr
+	name = "Qing Dynasty"
+	icon_state = "hair_qing_dynasty_swtgr"
+	gender = MALE
+
+/datum/sprite_accessory/hair/ramona
+	name = "Ramona"
+	icon_state = "hair_ramona"
+
+/datum/sprite_accessory/hair/monk_tonsure_by_swtgr
+	name = "Monk Tonsure"
+	icon_state = "hair_monk_tonsure_by_swtgr"
+
+/datum/sprite_accessory/hair/nia
+	name = "Nia"
+	icon_state = "hair_nia"
+
+/datum/sprite_accessory/hair/oxton
+	name = "Oxton"
+	icon_state = "hair_oxton"
+
+/datum/sprite_accessory/hair/pixie
+	name = "Pixie"
+	icon_state = "hair_pixie"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/mbraid
+	name = "Medium Braid"
+	icon_state = "hair_mediumbraid"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/messy_bun
+	name = "Messy Bun"
+	icon_state = "hair_messybun"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/ming_dynasty_swtgr
+	name = "Ming Dynasty"
+	icon_state = "hair_ming_dynasty_swtgr"
+
+/datum/sprite_accessory/hair/ladylike
+	name = "Ladylike"
+	icon_state = "hair_ladylike"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/ladylike2
+	name = "Ladylike alt"
+	icon_state = "hair_ladylike2"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/hbangs
+	name = "Combed Hair"
+	icon_state = "hair_hbangs"
+
+/datum/sprite_accessory/hair/hbangsalt
+	name = "Combed Hair Alt"
+	icon_state = "hair_hbangs_alt"
+
+/datum/sprite_accessory/hair/highpony
+	name = "High Ponytail"
+	icon_state = "hair_highponytail"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/hamasaki
+	name = "Hamasaki Hair"
+	icon_state = "hair_hamasaki"
+
+/datum/sprite_accessory/hair/femcut
+	name = "Cut Hair Alt"
+	icon_state = "hair_femc"
+
+/datum/sprite_accessory/hair/eighties
+	name = "80's"
+	icon_state = "hair_80s"
+
+/datum/sprite_accessory/hair/bun3
+	name = "Bun 3"
+	icon_state = "hair_bun3"
+
+/datum/sprite_accessory/hair/chop
+	name = "Chop"
+	icon_state = "hair_chop"
+
+/datum/sprite_accessory/hair/cossack
+	name = "Cossack"
+	icon_state = "hair_cossack_swtgr"
+	gender = MALE
+
+/datum/sprite_accessory/hair/cossack2
+	name = "Cossack2"
+	icon_state = "hair_cossack_swtgr2"
+	gender = MALE
+
+/datum/sprite_accessory/hair/business4
+	name = "Business Hair 4"
+	icon_state = "hair_business4"
+
+/datum/sprite_accessory/hair/birdnest
+	name = "Birdnest"
+	icon_state = "hair_birdnest"
+
+/datum/sprite_accessory/hair/birdnest2
+	name = "Birdnest 2"
+	icon_state = "hair_birdnest2"
+
+/datum/sprite_accessory/hair/blackswordsman
+	name = "Mercenary"
+	icon_state = "hair_blackswordsman"
+
+/datum/sprite_accessory/hair/antenna
+	name = "Antenna Hair"
+	icon_state = "hair_antenna"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/averagejoe
+	name = "Average Joe"
+	icon_state = "hair_averagejoe"
+
+/datum/sprite_accessory/hair/braid
+	name = "Floorlength Braid"
+	icon_state = "hair_braid"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/undercut_2
+	name = "Undercut Swept Right"
+	icon_state = "hair_undercut2_s"
+	gender = MALE
+
+/datum/sprite_accessory/hair/undercut_3
+	name = "Undercut Swept Left"
+	icon_state = "hair_undercut3_s"
+	gender = MALE
