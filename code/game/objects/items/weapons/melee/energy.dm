@@ -128,10 +128,10 @@
 /obj/item/weapon/melee/energy/sword
 	name = "energy sword"
 	desc = "May the force be within you."
-	icon = 'infinity/icons/obj/weapons.dmi' //inf
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "sword0"
-	active_force = 30
-	active_throwforce = 20
+	active_force = 45
+	active_throwforce = 45
 	force = 3
 	throwforce = 5
 	throw_speed = 1
@@ -182,6 +182,46 @@
 
 /obj/item/weapon/melee/energy/sword/get_parry_chance(mob/user)
 	return active ? ..() : 0
+
+/obj/item/weapon/melee/energy/sword/attackby(obj/item/sword as obj, mob/user as mob)
+	if(istype(sword, /obj/item/weapon/melee/energy/sword))
+		to_chat(user, "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon!</span>")
+		new /obj/item/weapon/melee/energy/sword/dualsaber(user.loc)
+		qdel(sword)
+		sword = null
+		qdel(src)
+
+/obj/item/weapon/melee/energy/sword/dualsaber
+	name = "dualsaber"
+	desc = "May the Dark side be within you."
+	icon_state = "dualsaber0"
+	active_force = 70
+	active_throwforce = 70
+	force = 5
+	throwforce = 10
+	throw_speed = 1
+	throw_range = 10
+	origin_tech = list(TECH_MAGNET = 4, TECH_ILLEGAL = 5)
+
+/obj/item/weapon/melee/energy/sword/dualsaber/New()
+	blade_color = pick("red", "blue", "green", "purple")
+
+/obj/item/weapon/melee/energy/sword/dualsaber/green/New()
+	blade_color = "green"
+
+/obj/item/weapon/melee/energy/sword/dualsaber/red/New()
+	blade_color = "red"
+
+/obj/item/weapon/melee/energy/sword/dualsaber/blue/New()
+	blade_color = "blue"
+
+/obj/item/weapon/melee/energy/sword/dualsaber/purple/New()
+	blade_color = "purple"
+
+/obj/item/weapon/melee/energy/sword/dualsaber/activate(mob/living/user)
+	..()
+	icon_state = "dualsaber[blade_color]"
+
 
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"
