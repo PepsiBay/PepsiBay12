@@ -6,10 +6,18 @@
 	var/lighting_color
 	var/active_attack_verb
 	var/inactive_attack_verb = list()
+	var/working_sound
+	var/datum/sound_token/sound_token
+	var/sound_id
+	var/volume = 30
+	can_block_projectiles = TRUE
+	can_block_bullets = TRUE
+	can_block_beams = TRUE
+	meltable = FALSE
 	sharp = 0
 	edge = 0
 	armor_penetration = 50
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/weapons/saberhit.mp3'
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_NO_BLOOD
 
 /obj/item/weapon/melee/energy/can_embed()
@@ -23,6 +31,7 @@
 	else
 		active = TRUE
 		deactivate()
+	working_sound = pick('sound/weapons/saberhum1.wav', 'sound/weapons/saberhum2.wav', 'sound/weapons/saberhum3.wav', 'sound/weapons/saberhum4.wav', 'sound/weapons/saberhum5.wav')
 
 /obj/item/weapon/melee/energy/on_update_icon()
 	. = ..()
@@ -43,9 +52,10 @@
 	attack_verb = active_attack_verb
 	update_icon()
 	if(user)
-		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberon.mp3', 50, 1)
 		to_chat(user, "<span class='notice'>\The [src] is now energised.</span>")
 	set_light(0.8, 1, 2, 4, lighting_color)
+	update_sound()
 
 /obj/item/weapon/melee/energy/proc/deactivate(mob/living/user)
 	if(!active)
@@ -59,9 +69,10 @@
 	attack_verb = inactive_attack_verb
 	update_icon()
 	if(user)
-		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberoff.mp3', 50, 1)
 		to_chat(user, "<span class='notice'>\The [src] deactivates!</span>")
 	set_light(0)
+	update_sound()
 
 /obj/item/weapon/melee/energy/attack_self(mob/living/user as mob)
 	if(active)
@@ -141,11 +152,20 @@
 	origin_tech = list(TECH_MAGNET = 3, TECH_ESOTERIC = 4)
 	sharp = 1
 	edge = 1
-	base_parry_chance = 50
+	base_block_chance = 50
 	active_attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	hitsound = 'sound/weapons/blade1.ogg'
 	var/blade_color
 
+/obj/item/weapon/melee/energy/sword/handle_shield(mob/user, var/damage, atom/damage_source = null, mob/attacker = null, var/def_zone = null, var/attack_text = "the attack")
+	if(user.incapacitated() || !active)
+		return 0
+	.  = ..()
+	if(.)
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, user.loc)
+		spark_system.start()
+		playsound(user.loc, hitsound, 50, 1)
+	
 /obj/item/weapon/melee/energy/sword/Initialize()
 	if(!blade_color)
 		blade_color = pick("red","blue","green","purple")
@@ -173,16 +193,6 @@
 	if(!istype(loc,/mob))
 		deactivate(user)
 
-/obj/item/weapon/melee/energy/sword/handle_shield(mob/user, var/damage, atom/damage_source = null, mob/attacker = null, var/def_zone = null, var/attack_text = "the attack")
-	if(.)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, user.loc)
-		spark_system.start()
-		playsound(user.loc, 'sound/weapons/blade1.ogg', 50, 1)
-
-/obj/item/weapon/melee/energy/sword/get_parry_chance(mob/user)
-	return active ? ..() : 0
-
 /obj/item/weapon/melee/energy/sword/attackby(obj/item/sword as obj, mob/user as mob)
 	if(istype(sword, /obj/item/weapon/melee/energy/sword))
 		to_chat(user, "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon!</span>")
@@ -201,9 +211,11 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 10
+	base_block_chance = 75
 	origin_tech = list(TECH_MAGNET = 4, TECH_ILLEGAL = 5)
 
 /obj/item/weapon/melee/energy/sword/dualsaber/New()
+	working_sound = pick('sound/weapons/saberhum1.wav', 'sound/weapons/saberhum2.wav', 'sound/weapons/saberhum3.wav', 'sound/weapons/saberhum4.wav', 'sound/weapons/saberhum5.wav')
 	blade_color = pick("red", "blue", "green", "purple")
 
 /obj/item/weapon/melee/energy/sword/dualsaber/green/New()
@@ -252,7 +264,6 @@
 	w_class = ITEM_SIZE_TINY //technically it's just energy or something, I dunno
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_NO_BLOOD
 	active_attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	hitsound = 'sound/weapons/blade1.ogg'
 	var/mob/living/creator
 	var/datum/effect/effect/system/spark_spread/spark_system
 
@@ -279,6 +290,17 @@
 /obj/item/weapon/melee/energy/blade/dropped()
 	..()
 	QDEL_IN(src, 0)
+
+/obj/item/weapon/melee/energy/proc/update_sound()
+	if(!working_sound)
+		return
+	if(!sound_id)
+		sound_id = "[name]_[sequential_id(/obj/item/weapon/melee/energy)]"
+	if(!sound_token)
+		sound_token = GLOB.sound_player.PlayLoopingSound(src, sound_id, working_sound, volume)
+		sound_token.SetVolume(volume)
+	else if(sound_token)
+		QDEL_NULL(sound_token)
 
 /obj/item/weapon/melee/energy/blade/Process()
 	if(!creator || loc != creator || (creator.l_hand != src && creator.r_hand != src))
@@ -308,4 +330,3 @@
 	w_class = ITEM_SIZE_SMALL
 	origin_tech = list(TECH_MAGNET = 3)
 	active_attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
-	hitsound = 'sound/weapons/blade1.ogg'

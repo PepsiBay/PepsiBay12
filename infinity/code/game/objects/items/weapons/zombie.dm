@@ -6,7 +6,7 @@
 	hitsound = 'infinity/sound/weapons/bloodyslice.ogg'
 	w_class = 4
 	force = 8
-	base_parry_chance = 0
+	base_block_chance = 0
 	canremove = 0
 	sharp = 0
 	edge = 0

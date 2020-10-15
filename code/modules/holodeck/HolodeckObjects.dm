@@ -246,9 +246,10 @@
 	throwforce = 0
 	w_class = ITEM_SIZE_SMALL
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_NO_BLOOD
-	base_parry_chance = 50
+	base_block_chance = 50
 	var/active = 0
 	var/item_color
+	hitsound = 'sound/weapons/saberhit.mp3'
 
 /obj/item/weapon/holo/esword/green
 	New()
@@ -264,9 +265,9 @@
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, user.loc)
 		spark_system.start()
-		playsound(user.loc, 'sound/weapons/blade1.ogg', 50, 1)
+		playsound(user.loc, hitsound, 50, 1)
 
-/obj/item/weapon/holo/esword/get_parry_chance(mob/user)
+/obj/item/weapon/holo/esword/get_block_chance(mob/user)
 	return active ? ..() : 0
 
 /obj/item/weapon/holo/esword/New()
@@ -278,13 +279,13 @@
 		force = 30
 		icon_state = "sword[item_color]"
 		w_class = ITEM_SIZE_HUGE
-		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberon.mp3', 50, 1)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
 		force = 3
 		icon_state = "sword0"
 		w_class = ITEM_SIZE_SMALL
-		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberoff.mp3', 50, 1)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
 	update_held_icon()

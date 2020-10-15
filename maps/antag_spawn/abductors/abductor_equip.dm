@@ -224,7 +224,7 @@
 	throwforce = 7
 	w_class = ITEM_SIZE_NORMAL
 	attack_verb = list("beaten")
-	base_parry_chance = 30
+	base_block_chance = 30
 
 	var/stunforce = 0
 	var/agonyforce = 15 //Nerfed this shit a lot

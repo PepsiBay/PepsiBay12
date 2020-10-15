@@ -654,7 +654,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 		var/hurt_prob = max(holding[I] - 2*skill_mod + state_mod, 0)
 		if(prob(hurt_prob) && I.on_disarm_attempt(target, attacker))
 			return
-
+			
 	var/randn = rand(1, 100) - skill_mod + state_mod
 	if(!(check_no_slip(target)) && randn <= 25)
 		var/armor_check = 100 * target.get_blocked_ratio(affecting, BRUTE, damage = 20)

@@ -177,6 +177,7 @@ Special projectiles
 	name = "microrocket"
 	gyro_light_impact = 1
 	distance_falloff = 1.3
+	blockable = FALSE
 
 /obj/item/projectile/beam/megabot
 	damage = 45

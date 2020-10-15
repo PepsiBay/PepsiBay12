@@ -8,13 +8,15 @@
 	projectiles = 1
 	projectile_energy_cost = 1000
 	salvageable = 0 // We don't want players ripping this off a dead mech. Could potentially be a prize for beating it if Devs bless me and someone offers a nerf idea.
+	blockable = FALSE
 
 /obj/item/projectile/bullet/cannon
 	name ="armor-piercing shell"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "shell"
 	damage = 1000 // In order to 1-hit any other mech and royally fuck anyone unfortunate enough to get in the way.
-
+	blockable = FALSE
+	
 /obj/item/projectile/bullet/cannon/on_hit(var/atom/target, var/blocked = 0)
 	explosion(target, 0, 0, 2, 4)
 	return 1

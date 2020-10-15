@@ -14,7 +14,8 @@
 	w_class = 4
 	force = 23
 	siemens_coefficient = 0.4
-	base_parry_chance = 40
+	meltable = FALSE
+	base_block_chance = 40
 	canremove = 0
 	sharp = 1
 	edge = 1

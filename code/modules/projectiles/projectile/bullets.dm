@@ -165,6 +165,7 @@
 	fire_sound = 'sound/weapons/gunshot/shotgun.ogg'
 	damage = 65
 	armor_penetration = 10
+	blockable = FALSE
 
 /obj/item/projectile/bullet/shotgun/beanbag		//because beanbags are not bullets
 	name = "beanbag"
@@ -173,6 +174,7 @@
 	agony = 60
 	embed = 0
 	armor_penetration = 0
+	blockable = TRUE
 	//INF distance_falloff = 3
 
 //Should do about 80 damage at 1 tile distance (adjacent), and 50 damage at 3 tiles distance.
@@ -224,6 +226,7 @@
 	var/gyro_devastation = -1
 	var/gyro_heavy_impact = 0
 	var/gyro_light_impact = 2
+	blockable = FALSE
 
 /obj/item/projectile/bullet/gyro/on_hit(var/atom/target, var/blocked = 0)
 	if(isturf(target))
@@ -256,7 +259,7 @@
 	damage = 0
 	nodamage = 1
 	embed = 0
-	sharp = 0 //INF, WAS NOTHING (1)
+	sharp = 0	 //INF, WAS NOTHING (1)
 
 /obj/item/projectile/bullet/pistol/cap/Process()
 	qdel(src)

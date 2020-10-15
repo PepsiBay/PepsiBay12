@@ -70,7 +70,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	slot_flags = SLOT_BELT
 	default_material = MATERIAL_TITANIUM
-	base_parry_chance = 50
+	base_block_chance = 50
 	attack_cooldown_modifier = 1
 	hitsound = 'sound/weapons/bladeslice.ogg' //inf
 	max_force = 20
@@ -83,7 +83,6 @@
 	name = "fabricated machete"
 	desc = "A long, machine-stamped blade with a somewhat ungainly handle. Found in military surplus stores, malls, and horror movies since before interstellar travel."
 	default_material = MATERIAL_STEEL
-	base_parry_chance = 40
 	matter = list(MATERIAL_STEEL = 15000, MATERIAL_PLASTIC = 2500)
 
 /obj/item/weapon/material/hatchet/machete/Initialize()
