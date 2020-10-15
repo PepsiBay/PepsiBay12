@@ -2,6 +2,7 @@
 	damage = 7
 	range_step = 2 //controls damage falloff with distance. projectiles lose a "pellet" each time they travel this distance. Can be a non-integer.
 
+	blockable = FALSE
 	base_spread = 0 //causes it to be treated as a shrapnel explosion instead of cone
 	spread_step = 20
 

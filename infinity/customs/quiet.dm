@@ -206,7 +206,7 @@
 	throw_speed = 1
 	throw_range = 10
 	w_class = ITEM_SIZE_SMALL
-	base_parry_chance = 0
+	base_block_chance = 0
 	var/tick_cost = 1
 	var/obj/item/weapon/cell/bcell = /obj/item/weapon/cell/device/high
 	trade_blacklisted = TRUE
@@ -245,14 +245,14 @@
 	sharp = 1
 	edge = 1
 	slot_flags |= SLOT_DENYPOCKET
-	playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+	playsound(user, 'sound/weapons/saberon.mp3', 50, 1)
 	icon_state = "toothpick_on"
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/melee/energy/toothpick/deactivate(mob/living/user)
 	if(!active)
 		return
-	playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+	playsound(user, 'sound/weapons/saberoff.mp3', 50, 1)
 	active = 0
 	force = initial(force)
 	throwforce = initial(throwforce)

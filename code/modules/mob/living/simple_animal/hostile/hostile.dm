@@ -106,8 +106,8 @@
 	if(!(target_mob in ListTargets(10)))
 		LostTarget()
 		return 0
+	var/mob/living/carbon/human/H = target_mob
 	if (ishuman(target_mob))
-		var/mob/living/carbon/human/H = target_mob
 		if (H.is_cloaked())
 			LoseTarget()
 			return 0
@@ -116,6 +116,7 @@
 	if(get_dist(src, target_mob) <= 1)	//Attacking
 		AttackingTarget()
 		return 1
+	return 0
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	face_atom(target_mob)

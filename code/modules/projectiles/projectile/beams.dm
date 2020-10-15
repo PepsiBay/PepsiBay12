@@ -27,10 +27,10 @@
 
 /obj/item/projectile/beam/smalllaser
 	damage = 25
-	armor_penetration = 0 //INF, WAS 10
+	armor_penetration = 10
 
 /obj/item/projectile/beam/midlaser
-	damage = 40 //INF, WAS 50
+	damage = 50
 	armor_penetration = 20
 
 /obj/item/projectile/beam/heavylaser
@@ -52,6 +52,7 @@
 	damage = 30
 	armor_penetration = 30
 	penetration_modifier = 0.8
+	blockable = FALSE
 
 	muzzle_type = /obj/effect/projectile/laser/xray/muzzle
 	tracer_type = /obj/effect/projectile/laser/xray/tracer

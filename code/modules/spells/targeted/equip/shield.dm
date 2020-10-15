@@ -19,7 +19,7 @@
 	duration = 300
 	delete_old = 0
 	var/item_color = "#6666ff"
-	var/block_chance = 30
+	var/block_chance = 50
 
 	hud_state = "wiz_shield"
 
@@ -29,6 +29,9 @@
 	I.color = item_color
 	I.SetName("Wizard's Shield")
 	I.base_block_chance = block_chance
+	I.can_block_projectiles = TRUE
+	I.can_block_bullets = TRUE
+	I.can_block_beams = TRUE
 	return I
 
 /spell/targeted/equip_item/shield/empower_spell()
@@ -36,7 +39,7 @@
 		return 0
 
 	item_color = "#6600ff"
-	block_chance = 60
+	block_chance = 75
 
 	return "Your summoned shields will now block more often."
 

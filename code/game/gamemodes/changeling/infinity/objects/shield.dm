@@ -18,7 +18,8 @@
 	throw_range = 0
 	throw_speed = 0
 	max_block = 15
-	can_block_lasers = TRUE
+	can_block_projectiles = TRUE
+	can_block_beams = TRUE
 	var/mob/living/creator
 
 /obj/item/weapon/shield/riot/changeling/dropped(var/mob/living/user)

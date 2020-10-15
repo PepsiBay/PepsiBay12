@@ -11,7 +11,7 @@
 	sharp = 0
 	edge = 0
 
-	var/default_material = MATERIAL_STEEL
+	default_material = MATERIAL_STEEL
 	var/material/material
 
 	var/applies_material_colour = 1
@@ -100,7 +100,7 @@
 	if(material.is_brittle() || target.get_blocked_ratio(hit_zone, BRUTE, damage_flags(), armor_penetration, force) * 100 >= material.hardness/5)
 		check_shatter()
 
-/obj/item/weapon/material/on_parry(damage_source)
+/obj/item/weapon/material/on_block(damage_source)
 	if(istype(damage_source, /obj/item/weapon/material))
 		check_shatter()
 

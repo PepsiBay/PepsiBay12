@@ -5,7 +5,7 @@
 	icon = 'icons/obj/augment.dmi'
 	applies_material_colour = 0
 	desc = "A handy utility blade for the discerning augmentee. Warranty void if used for cutting."
-	base_parry_chance = 30
+	base_block_chance = 30
 	melee_accuracy_bonus = 10 ///INF
 	unbreakable = 1
 	force_divisor = 0.5 ///INF WAS 0.2
@@ -23,13 +23,14 @@
 	allowed_organs = list(BP_AUGMENT_R_ARM, BP_AUGMENT_L_ARM)
 	holding_type = /obj/item/weapon/material/armblade
 	//Limited to robolimbs
+	base_block_chance = 30
 	augment_flags = AUGMENTATION_MECHANIC
 
 /obj/item/weapon/material/armblade/claws
 	icon_state = "wolverine"
 	name = "combat claws"
 	desc = "These do not grow back."
-	base_parry_chance = 40
+	base_block_chance = 40
 	force_divisor = 0.3
 
 //Alternate look
@@ -41,4 +42,5 @@
 	allowed_organs = list(BP_AUGMENT_R_HAND, BP_AUGMENT_L_HAND)
 	holding_type = /obj/item/weapon/material/armblade/claws
 	//Limited to robolimbs
+	base_block_chance = 40
 	augment_flags = AUGMENTATION_MECHANIC

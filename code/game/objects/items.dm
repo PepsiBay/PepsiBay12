@@ -21,7 +21,12 @@
 	var/lock_picking_level = 0 //used to determine whether something can pick a lock, and how well.
 	var/force = 0
 	var/attack_cooldown = DEFAULT_WEAPON_COOLDOWN
+	var/can_block_projectiles = FALSE
+	var/can_block_bullets = FALSE
+	var/can_block_beams = FALSE
 	var/melee_accuracy_bonus = 0
+	var/default_material
+	var/meltable = TRUE //can be melted by energy sword when blocking
 
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
 	var/cold_protection = 0 //flags which determine which body parts are protected from cold. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
@@ -57,8 +62,7 @@
 	var/zoomdevicename = null //name used for message when binoculars/scope is used
 	var/zoom = 0 //1 if item is actively being used to zoom. For scoped guns and binoculars.
 	var/surgery_speed = 1 //When this item is used as a surgery tool, multiply the delay of the surgery step by this much.
-
-	var/base_parry_chance	// Will allow weapon to parry melee attacks if non-zero
+	var/base_block_chance	// Will allow weapon to block melee attacks if non-zero
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
 
 	var/use_alt_layer = FALSE // Use the slot's alternative layer when rendering on a mob
@@ -515,25 +519,68 @@ var/list/global/slot_flags_enumeration = list(
 //For non-projectile attacks this usually means the attack is blocked.
 //Otherwise should return 0 to indicate that the attack is not affected in any way.
 /obj/item/proc/handle_shield(mob/user, var/damage, atom/damage_source = null, mob/attacker = null, var/def_zone = null, var/attack_text = "the attack")
-	var/parry_chance = get_parry_chance(user)
+	var/block_chance = get_block_chance(user)
+	var/obj/item/holding_u = user.get_active_hand()
 	if(attacker)
-		parry_chance = max(0, parry_chance - 10 * attacker.get_skill_difference(SKILL_COMBAT, user))
-	if(parry_chance)
-		if(default_parry_check(user, attacker, damage_source) && prob(parry_chance))
-			user.visible_message("<span class='danger'>\The [user] parries [attack_text] with \the [src]!</span>")
-			playsound(user.loc, 'sound/weapons/punchmiss.ogg', 50, 1)
-			on_parry(damage_source)
-			return 1
+		block_chance = max(0, block_chance - 5 * attacker.get_skill_difference(SKILL_COMBAT, user))
+	if(block_chance)
+		if(prob(block_chance))
+			if(istype(damage_source,/obj/item/projectile) && holding_u.can_block_projectiles)
+				var/obj/item/projectile/P = damage_source
+				if(!P.blockable)
+					return 0
+				//beam block
+				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+				spark_system.set_up(3, 0, user.loc)
+				spark_system.start()
+				if(istype(P,/obj/item/projectile/beam) && holding_u.can_block_beams)
+					if(prob(block_chance))
+						visible_message("<span class='warning> \The [user] reflects [P] with their [src.name]!")
+						// Find a turf near or on the original location to bounce to
+						var/new_x = P.starting.x + rand(-2,2)
+						var/new_y = P.starting.y + rand(-2,2)
+						var/turf/curloc = get_turf(user)
+						// redirect the projectile
+						P.redirect(new_x, new_y, curloc, user)
+						return PROJECTILE_CONTINUE // complete projectile permutation
+
+					visible_message("<span class='warning> \The [user] dissolves [P] with their [src.name]!")
+					return PROJECTILE_FORCE_BLOCK // Beam reflections code is kinda messy, I ain't gonna touch it. ~Toby
+				if(holding_u.can_block_bullets)
+					if(P.armor_penetration > 57.5)
+						visible_message("<span class='warning> \The [user] tries to block [P] with their [src.name]. <b>Not the best idea.</b>")
+						return 0
+					else
+						visible_message("<span class='warning> \The [user] blocks [P] with their [src.name]!")	
+						return PROJECTILE_FORCE_BLOCK
+			if(!user.incapacitated())
+				var/obj/item/holding_a = attacker.get_active_hand()
+				var/bad_arc = reverse_direction(user.dir) //arc of directions from which we cannot block
+				if(check_shield_arc(user, bad_arc, damage_source, attacker))
+					var/blocksound = 'sound/weapons/Genhit.ogg'
+					var/esword_blocksound = pick('sound/weapons/saberblock2.mp3', 'sound/weapons/saberblock3.mp3', 'sound/weapons/saberblock4.mp3', 'sound/weapons/saberblock5.mp3', 'sound/weapons/saberblock6.mp3', 'sound/weapons/saberblock7.mp3', 'sound/weapons/saberblock8.mp3', 'sound/weapons/saberblock9.mp3')
+					if(istype(holding_a, /obj/item/weapon/melee/energy) && (istype(holding_u, /obj/item/weapon/melee/energy)))
+						blocksound = esword_blocksound
+					if(istype(holding_a, /obj/item/weapon/melee/energy) && holding_u.meltable && holding_u.base_block_chance)
+						user.visible_message("<span class='danger'>\The [attacker] melts [user]'s [holding_u] with his [holding_a]!</span>")
+						user.drop_item()
+						qdel(holding_u)
+						return 0
+					user.visible_message("<span class='danger'>\The [user] blocks [attack_text] with \the [src]!</span>")
+					playsound(user.loc, blocksound, 50, 1)
+					on_block(damage_source)
+					return 1
 	return 0
 
-/obj/item/proc/on_parry(damage_source)
+/obj/item/proc/on_block(damage_source)
 	return
 
-/obj/item/proc/get_parry_chance(mob/user)
-	. = base_parry_chance
+/obj/item/proc/get_block_chance(mob/user)
+	. = base_block_chance
 	if(user)
-		if(base_parry_chance && user.skill_check(SKILL_COMBAT, SKILL_ADEPT)) // ||
-			. += 10 * (user.get_skill_value(SKILL_COMBAT) - SKILL_BASIC)
+		if(base_block_chance && user.skill_check(SKILL_COMBAT, SKILL_ADEPT)) // ||
+			. += 2.5 * (user.get_skill_value(SKILL_COMBAT) - SKILL_BASIC)
+			return
 
 /obj/item/proc/on_disarm_attempt(mob/target, mob/living/attacker)
 	if(force < 1)
